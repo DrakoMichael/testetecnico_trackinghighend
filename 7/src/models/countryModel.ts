@@ -1,5 +1,4 @@
 export interface Country {
   name: string;
-  capital: string;
-  flag: string;
+  avaliação: number;
 }

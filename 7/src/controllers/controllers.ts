@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { FetchAPI } from "../services/fetchAPI";
+import { FetchAPIService } from "../services/fetchAPIService";
 
 export class CountryController {
-  constructor(private fetchAPI: FetchAPI) {}
+  constructor(private fetchAPI: FetchAPIService) {}
 
   async getAllCountries(_req: Request, res: Response): Promise<Response> {
     try {
-      const data = await this.fetchAPI.fetchAll();
+      const data = await FetchAPIService.fetchAll();
       return res.status(200).json(data);
     } catch (error: unknown) {
       console.error("Erro em getAllCountries:", error);
@@ -33,7 +33,7 @@ export class CountryController {
 
   async getTop10Countries(req: Request, res: Response): Promise<Response> {
     try {
-      const data = await this.fetchAPI.fetchTop10();
+      const data = await FetchAPIService.fetchTop10();
       return res.status(200).json(data);
     } catch (error: unknown) {
       console.error("Erro em getTop10Countries:", error);
