@@ -53,4 +53,29 @@ export class CountryController {
       res.status(500).json({ error: err.message });
     }
   }
+
+  async buscarPaisPorNome(req: Request, res: Response): Promise<Response> {
+    const nome = req.query.nome as string;
+    if (!nome) {
+      return res.status(400).json({ error: 'Parâmetro "nome" é obrigatório.' });
+    }
+    try {
+      const countries = await FetchAPIService.fetchByName(nome);
+      // Buscar avaliação do banco para cada país retornado
+      const result = await Promise.all(
+        countries.map(async (c: any) => {
+          const countryName = c.name?.common || c.name || "sem nome";
+          const dbCountry = await dataBaseService.getCountryByName(countryName);
+          return {
+            name: countryName,
+            population: c.population || 0,
+            avaliacao: dbCountry ? dbCountry.avaliacao : null,
+          };
+        })
+      );
+      return res.status(200).json(result);
+    } catch (error: unknown) {
+      return res.status(500).json({ error: "Erro ao buscar país." });
+    }
+  }
 }

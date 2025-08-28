@@ -4,6 +4,10 @@ import { CountryController } from "../controllers/controllers";
 const router = Router();
 const controller = new CountryController();
 
+router.get("/paises/buscar", (req, res) =>
+  controller.buscarPaisPorNome(req, res)
+);
+
 router.get("/paises/top10", (req, res) =>
   controller.getTop10Countries(req, res)
 );
