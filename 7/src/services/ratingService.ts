@@ -1,14 +1,10 @@
 import db from "./dataBaseService";
 
 export class AvaliacaoService {
-  static async getAllAvaliacoes() {
-    return db.avalicoes;
-  }
-
-  static async addAvaliacao(avaliacao: { country: string; rating: number }) {
+  static async addAvaliacao(avaliacao: { name: string; avaliacao: number }) {
     const insertQuery =
-      "INSERT INTO avalicoes (country, rating) VALUES ($1, $2) RETURNING *";
-    const values = [avaliacao.country, avaliacao.rating];
+      "INSERT INTO countries (name, avaliacao) VALUES ($1, $2) RETURNING *";
+    const values = [avaliacao.name, avaliacao.avaliacao];
     return db.one(insertQuery, values);
   }
 }

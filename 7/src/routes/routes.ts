@@ -1,33 +1,25 @@
 import { Router } from "express";
 import { CountryController } from "../controllers/controllers";
-import { FetchAPI } from "../services/fetchAPIService";
 
 const router = Router();
-const fetchAPI = new FetchAPI();
-const controller = new CountryController(fetchAPI);
+const controller = new CountryController();
 
-router.get("/", (req, res) => {
-  controller.getAllCountries(req, res);
-});
+router.get("/paises/top10", (req, res) =>
+  controller.getTop10Countries(req, res)
+);
 
-router.get("/:name", (req, res) => {
-  controller.getCountryByName(req, res);
-});
+router.get("/paises/avaliar/:name", (req, res) =>
+  controller.getCountryByName(req, res)
+);
 
-router.get("/top10", (req, res) => {
-  controller.getTop10Countries(req, res);
-});
+router.post("/paises/avaliar", (req, res) => controller.rateCountry(req, res));
 
-router.get("/avaliar", (req, res) => {
-  // implementar
-});
+router.get("/paises/:name", (req, res) =>
+  controller.getCountryByName(req, res)
+);
 
-router.get("/avaliar/:name", (req, res) => {
-  controller.getCountryByName(req, res);
-});
+router.get("/paises", (req, res) => controller.getAllCountries(req, res));
 
-router.post("/avaliar/:name", (req, res) => {
-  // implementar
-});
+router.get("/", (_req, res) => controller.defaultExport(_req, res));
 
 export default router;

@@ -1,4 +1,5 @@
 export interface Country {
   name: string;
-  avaliação: number;
+  population: number;
+  avaliacao?: number;
 }
